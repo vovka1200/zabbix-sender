@@ -58,8 +58,9 @@ func (di DataItems) Marshal() (b []byte, err error) {
 	d, err := json.Marshal(di)
 	if err == nil {
 		// the order of fields in this "JSON" is important - request should be before data
-		now := fmt.Sprint(time.Now().Unix())
-		ns := fmt.Sprint(time.Now().Nanosecond())
+		t := time.Now()
+		now := fmt.Sprint(t.Unix())
+		ns := fmt.Sprint(t.Nanosecond())
 		datalen := uint64(len(d) + len(now) + 42 + len(ns) + 6) // 32 + d + 9 + now + 6 + ns + 1
 		b = make([]byte, 0, datalen+13)                         // datalen + 5 + 8
 		buf := bytes.NewBuffer(b)
